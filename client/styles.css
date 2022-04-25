@@ -28,3 +28,17 @@
     display: block;
     margin: 0 auto;
   }
+
+.review_button {
+  font-weight: bold;
+
+  color: #FFFFFF;
+  background-color: #3CB371;
+
+  border: none;
+  border-radius: 3px;
+
+  padding: 10px 40px;
+  cursor: pointer;
+
+}

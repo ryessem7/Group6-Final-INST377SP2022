@@ -6,8 +6,12 @@ import fetch from 'node-fetch';
 
 import db from '../database/initializeDB.js';
 import hallIdQuery from '../controllers/diningHall.js';
+import marioRoutes from './marioRoutes.js';
 
 const router = express.Router();
+
+// The name of this can change once all of our routes are the same document.
+router.use('/mRoutes', marioRoutes);
 
 router.get('/', (req, res) => {
   res.send('Welcome to the Hispanic Restaurants API!');
@@ -16,6 +20,7 @@ router.get('/', (req, res) => {
 /// /////////////////////////////////
 /// //////// Area Endpoints////////// by Ryan E
 /// /////////////////////////////////
+
 
 router.get('/area', async (req, res) => {
   try {

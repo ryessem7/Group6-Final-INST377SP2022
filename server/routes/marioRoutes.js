@@ -1,8 +1,12 @@
-/* eslint-disable no-console */
 import express from 'express';
-import sequelize from 'sequelize';
-import db from '../database/initializeDB.js';
+import sequelize from sequelize
+import chalk from 'chalk';
 import fetch from 'node-fetch';
+
+import db from '../database/initializeDB.js';
+// importing my query -Mario
+import reviewsQuery from '../controllers/Reviews_query.js';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -38,14 +42,20 @@ router.get('/review/:id', async (req, res) => {
   }
 });
 
-router.post('/review', async (req, res) => {
+// edited my router to work w/ js file following the lecture format
+.post( async (req, res) => {
   try {
-    console.log('Touched post endpoint', req.body);
-    console.log(req.body?.resto);
-    res.json({message: 'post FoodServices endpoint'});
+    console.dir(req.body, {depth: null});
+    console.log(req.body?.idRestaraunt);
+    const restarauntIdentified = req.body?.idRestaraunt || 0;
+    const result = await db.sequelizeDB.query(reviewsQuery, {
+      replacements: {restaurant_id: restarauntIdentified},
+      type: sequelize.QueryTypes.SELECT
+    });
+    res.json({data: result});
   } catch (err) {
-    console.log(error);
-    res.json({error: 'Something went wrong on the server'});
+    console.log(err);
+    res.send({message:err});
   }
 });
 
