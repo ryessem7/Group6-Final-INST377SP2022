@@ -1,36 +1,37 @@
-// prevent page from refreshing 
-submitEvent.preventDefault();
+$(document).ready(function(){
 
-const formObj = formToObject(form);
-console.log('check the form for filters', formObj);
-const postResult = await fetch('api/mRoutes', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formObj)
-});
-const postResultJSON = await postResult.json();
-console.log('return from Post', postResult);
-console.log('return from Post JSON', postResultJSON);
+    $('#menu').click(function(){
+        $(this).toggleClass('fa-times');
+        $('.navbar').toggleClass('nav-toggle');
+    });
 
-// button 
-const revButton = document.querySelector('#review_button');
-revButton.addEventListener('click', async (event) => {
-    console.log(event.target);
-    console.log(category.value);
-});
+    $(window).on('load scroll',function(){
 
+        $('#menu').removeClass('fa-times');
+        $('.navbar').removeClass('nav-toggle');
 
-// reduce function as seen on lecture 
-function formToObject(htmlFormElement) {
-    const formItem = new FormData(htmlFormElement).entries();
-    const formArray = Array.form(formItem);
-    const formObject = formArray.reduce((collection, item, index) => {
-        if (!collection[item[0]]) {
-            collection [item[0]] = item[1];
+        if($(window).scrollTop() > 60){
+            $('header .header-2').addClass('header-active');
+        }else{
+            $('header .header-2').removeClass('header-active');
         }
-        return collection;
-    }, {});
-    return formObject;
+
+        $('section').each(function(){
+
+            let height = $(this).height();
+            let offset = $(this).offset().top - 200;
+            let top = $(window).scrollTop();
+            let id = $(this).attr('id');
+
+            if(top >= offset && top < offset + height){
+                $('.navbar ul li a').removeClass('active');
+                $('.navbar').find(`[href="#${id}"]`).addClass('active');
+            }
+
+        });
+ });
+
+
+ // updated
+ // may need to expand on this more for website functionality
 
