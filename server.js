@@ -18,6 +18,7 @@ app.use(express.static(staticFolder));
 app.use('/api', apiRoutes);
 app.use('/api', ryanRoutes);
 app.use('/api', nnamdiRoutes);
+app.use('/api', marioRoutes);
 
 
 async function bootServer() {
